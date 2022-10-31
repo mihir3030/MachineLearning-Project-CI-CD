@@ -23,6 +23,8 @@ class Configuration:
     def get_data_ingestion_config(self) -> DataIngestionConfig:
         try:
             artifact_dir = self.training_pipeline_config.artifact_dir
+            print(artifact_dir)
+
             data_ingestion_artifact_dir = os.path.join(artifact_dir, DATA_INGESTION_ARTIFACT_DIR, self.time_stamp)
            
             data_ingestion_info = self.config_info[DATA_INGESTION_CONFIG_KEY]
@@ -70,8 +72,10 @@ class Configuration:
             # read training pipeline config from config.yaml 
             # this is use for reading artifact path from config.yaml
             training_pipeline_config = self.config_info[TRAINING_PIPELINE_CONFIG_KEY]
-            artifact_dir = os.path.join(ROOT_DIR, TRAINING_PIPELINE_NAME_KEY, TRAINING_PIPELINE_ARTIFACT_DIR_KEY)
-
+            artifact_dir = os.path.join(ROOT_DIR, 
+                                        training_pipeline_config[TRAINING_PIPELINE_NAME_KEY], 
+                                        training_pipeline_config[TRAINING_PIPELINE_ARTIFACT_DIR_KEY])
+            print(artifact_dir)
             training_pipeline_config = TrainingPipelineConfig(artifact_dir = artifact_dir)
             logging.info(f"Training Pipeline Config = {training_pipeline_config}")
             return training_pipeline_config
